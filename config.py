@@ -8,8 +8,7 @@ class Config:
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
 	FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
 	FLASKY_MAIL_SENDER = 'Flasky Admin <fangweiren843@163.com>'
-	#FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
-	FLASKY_ADMIN = 'fangweiren843@163.com'
+	FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
 	FLASKY_POSTS_PER_PAGE = 20
 
 	@staticmethod
@@ -21,10 +20,8 @@ class DevelopmentConfig(Config):
 	MAIL_SERVER = 'smtp.163.com'
 	MAIL_PORT = 465
 	MAIL_USE_SSL = True
-	#MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-	#MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-	MAIL_USERNAME = 'fangweiren843@163.com'
-	MAIL_PASSWORD = 'fwr5079843'
+	MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+	MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
 	SQLALCHEMY_DATABASE_URI = "mysql://root:123456@localhost/myblog"
 
 class TestingConfig(Config):
