@@ -207,7 +207,8 @@ class User(UserMixin, db.Model):
 
 	@property
 	def followed_posts(self):
-		return Post.query.join(Follow, Follow.followed_id == Post.author_id).filter(Follow.follower_id == self.id)
+		return Post.query.join(Follow, Follow.followed_id == Post.author_id)\
+			.filter(Follow.follower_id == self.id)
 
 	def __repr__(self):
 		return '<User %r>' % self.username
@@ -233,7 +234,7 @@ class Post(db.Model):
 	body = db.Column(db.Text)
 	body_html = db.Column(db.Text)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-	auth_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+	author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 	@staticmethod
 	def generate_fake(count=100):
