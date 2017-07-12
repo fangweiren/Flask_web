@@ -28,6 +28,8 @@
 				 {% if current_user.is_authenticated %}
 				 <li><a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a></li>
 				 {% endif %}
+				 <li><a href="https://github.com/fangweiren/myflask">我的Github</a></li>
+				 <li><a href="http://fangweiren843.blog.163.com/">我的网易博客</a></li>
 			 </ul>
 			 <ul class="nav navbar-nav navbar-right">
 			 	{% if current_user.is_authenticated %}
@@ -43,7 +45,8 @@
 					</ul>
 				</li>
 				{% else %}
-				<li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+				<li><a href="{{ url_for('auth.login') }}">登录</a></li>
+				<li><a href="{{ url_for('auth.register') }}">注册</a></li>
 				{% endif %}
 			 </ul>
 		 </div>
