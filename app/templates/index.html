@@ -14,6 +14,11 @@
 	{% endif %}
 	</h1>
 </div>
+{% if current_user.is_authenticated %}
+<div class="juxing">
+	{{ current_user.username }}
+</div>
+{% endif %}
 <div>
 	{% if current_user.can(Permission.WRITE_ARTICLES) %}
 	{{ wtf.quick_form(form) }}
