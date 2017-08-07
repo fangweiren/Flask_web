@@ -32,6 +32,9 @@
 				 <li><a href="http://fangweiren843.blog.163.com/">网易博客</a></li>
 			 </ul>
 			 <ul class="nav navbar-nav navbar-right">
+			 	{% if current_user.can(Permission.MODERATE_COMMENTS) %}
+				<li><a href="{{ url_for('main.moderate') }}">评论管理</a></li>
+				{% endif %}
 			 	{% if current_user.is_authenticated %}
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">

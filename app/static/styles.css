@@ -1,6 +1,16 @@
-li.post {
-	border:6px solid #C0C0C0;
+a.dropdown-toggle {
+	display: block;
+	min-width: 150px;
+	min-height: 30px;
+	text-align: center;
 }
+ul.dropdown-menu {
+	
+    min-width: 150px;
+    min-height: 100px;
+    font-size: 110%;
+    text-align: center;
+} 
 .profile-thumbnail {
 	position : absolute;
 }
@@ -116,10 +126,4 @@ div.juxing {
 	position: fixed;
 	right: 60px;
 	top: 60px;
-}
-ul.dropdown-menu {
-	min-width: 132px;
-	height: 100px;
-	font-size: 120%;
-	text-align: center;
 }
