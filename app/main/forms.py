@@ -8,8 +8,8 @@ from ..models import Role, User
 
 
 class NameForm(FlaskForm):
-	name = StringField('What is your name?', validators=[Required()])
-	submit = SubmitField('Submit')
+	name = StringField('有什么新鲜事想告诉大家?', validators=[Required()])
+	submit = SubmitField('发布')
 
 class EditProfileForm(FlaskForm):
 	name = StringField('Real name', validators=[Length(0, 64)])
@@ -41,8 +41,8 @@ class EditProfileAdminForm(FlaskForm):
 			raise ValidationError('Username already in use.')
 
 class PostForm(FlaskForm):
-	body = PageDownField("What's on your mind?", validators=[Required()])
-	submit = SubmitField('Submit')
+	body = PageDownField("有什么新鲜事想告诉大家?", validators=[Required()])
+	submit = SubmitField('发布')
 
 
 class CommentForm(FlaskForm):
