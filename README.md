@@ -186,6 +186,18 @@ server {
 </code></pre>
 到此部署已经全部完成，接下来就可以用域名或公网IP访问了。
 
+## 参考文章
+[阿里云部署 Flask + WSGI + Nginx 详解](http://www.cnblogs.com/Ray-liang/p/4173923.html?utm_source=tuicool&utm_medium=referral)  
+[GitHub - HortonHu/HO: 基于Flask的博客网站](https://github.com/HortonHu/HO)  
+[Flask 搭建 Web 应用 | classTC的博客](http://classtc.com/2016/07/12/160711/)  
+[GitHub - Junctionzc/flask-blog: 《Flask Web开发》的个人部署版本，包含学习笔记。](https://github.com/Junctionzc/flask-blog)  
+[Flask Gunicorn Supervisor Nginx 项目部署小总结 · GitHub](https://gist.github.com/binderclip/f6b6f5ed4d71fa64c7c5)  
+[python web 部署：nginx + gunicorn + supervisor + flask 部署笔记](http://www.jianshu.com/p/be9dd421fb8d)  
+[flask几种部署方式实践 · 搬砖工的日常](https://eclipsesv.com/2016/12/12/flask%E9%83%A8%E7%BD%B2%E6%96%B9%E5%BC%8F%E5%AE%9E%E8%B7%B5/)  
+[centos下通过gunicorn+nginx+supervisor部署Flask项目](https://zhuanlan.zhihu.com/p/21262280)  
+[Ubuntu 下 WSGI + Nginx + Supervisor 部署 Flask](http://jinke.me/2015/12/09/flask-linux.html)  
+[Linux服务器的初步配置流程](http://www.ruanyifeng.com/blog/2014/03/server_setup.html)
+
 # -------------------------------------------------------------------
 # MTV模式  
 
