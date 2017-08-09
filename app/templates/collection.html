@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Flasky - 我的收藏{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>我的收藏</h1>
+</div>
+{% include "_posts.html" %}
+
+{% if pagination %}
+<div class="pagination">
+	{{ macros.pagination_widget(pagination, '.index') }}
+</div>
+{% endif %}
+
+{% endblock %}

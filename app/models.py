@@ -10,6 +10,11 @@ from app.exceptions import ValidationError
 from . import db, login_manager
 
 
+user_collect_post = db.Table('collection',
+	db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+	db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
+
+
 class Permission:
 	FOLLOW = 0x01
 	COMMENT = 0x02
@@ -74,6 +79,9 @@ class User(UserMixin, db.Model):
 	                            backref=db.backref('followed', lazy='joined'),
 	                            lazy='dynamic', cascade='all, delete-orphan')
 	comments = db.relationship('Comment', backref='author', lazy='dynamic')
+	posts_collect = db.relationship('Post', secondary=user_collect_post,
+									backref=db.backref('users_collect', lazy='dynamic'),
+									lazy='dynamic')
 
 
 	@staticmethod
@@ -215,6 +223,12 @@ class User(UserMixin, db.Model):
 
 	def is_followed_by(self, user):
 		return self.followers.filter_by(follower_id=user.id).first() is not None
+
+	def collect_toggle(self, post):
+		if post not in self.posts_collect.all():
+			self.posts_collect.append(post)
+		else:
+			self.posts_collect.remove(post)
 
 	@property
 	def followed_posts(self):

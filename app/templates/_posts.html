@@ -17,20 +17,31 @@
 				{% endif %}
 			</div>
 			<div class="post-footer">
+				{% if current_user.is_authenticated and current_user != post.author %}
+	                {% if post not in current_user.posts_collect.all() %}
+	                    <a href="{{ url_for('.collect_toggle', id=post.id, page=page) }}">
+	                        <span class="iconfont icon-shoucang1"> 收&nbsp;&nbsp;&nbsp;&nbsp;藏</span>
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('.collect_toggle', id=post.id, page=page) }}">
+                            <span class="iconfont icon-shoucang"> 已收藏</span>
+                        </a>                                                                                           
+                    {% endif %}
+                {% endif %}
 				{% if current_user == post.author %}
 				<a href="{{ url_for('.edit', id=post.id) }}">
-					<span class="label label-primary">Edit</span>
+					<span class="iconfont icon-bianji"><span class="con2"> 编&nbsp;&nbsp;&nbsp;&nbsp;辑</span></span>
 				</a>
 				{% elif current_user.is_administrator() %}
 				<a href="{{ url_for('.edit', id=post.id) }}">
-					<span class="label label-danger">Edit [Admin]</span>
+					<span class="iconfont icon-bianji">编辑[Admin]</span>
 				</a>
 				{% endif %}
 				<a href="{{ url_for('.post', id=post.id) }}">
-					<span class="label label-default">Permalink</span>
+					<span class="iconfont icon-zhuanfa"> 转&nbsp;&nbsp;&nbsp;&nbsp;发</span>
 				</a>
 				<a href="{{ url_for('.post', id=post.id) }}#comments">
-					<span class="label label-primary">{{ post.comments.count() }} 评论</span>
+					<span class="iconfont icon-pinglun"> {{ post.comments.count() }} 评&nbsp;&nbsp;论</span>
 				</a>
 			</div>
 		</div>

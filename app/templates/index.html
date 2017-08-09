@@ -16,7 +16,8 @@
 </div>
 {% if current_user.is_authenticated %}
 <div class="juxing">
-	{{ current_user.username }}
+	<li><p><a href="{{ url_for('.index') }}">首页</a></p></li>
+	<li><p><a href="{{ url_for('.show_collection',username=current_user.username) }}">我的收藏</a></p><li>
 </div>
 {% endif %}
 <div>

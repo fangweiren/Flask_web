@@ -186,7 +186,7 @@ def followed_by(username):
 @login_required
 def show_all():
 	resp = make_response(redirect(url_for('.index')))
-	resp.set_cookie('show_followed', '', max_age=30*24*60*60)
+	resp.set_cookie('show_followed', 'all', max_age=30*24*60*60)
 	return resp
 
 
@@ -194,7 +194,7 @@ def show_all():
 @login_required
 def show_followed():
 	resp = make_response(redirect(url_for('.index')))
-	resp.set_cookie('show_followed', '1', max_age=30*24*60*60)
+	resp.set_cookie('show_followed', 'followed', max_age=30*24*60*60)
 	return resp
 
 
@@ -227,3 +227,24 @@ def moderate_disable(id):
     comment.disabled = True
     db.session.add(comment)
     return redirect(url_for('.moderate', page=request.args.get('page', 1, type=int)))
+
+
+@main.route('/collection/<username>')
+@login_required
+def show_collection(username):
+	user = User.query.filter_by(username=username).first()
+	page = request.args.get('page', 1, type=int)
+	pagination = user.posts_collect.paginate(page, 
+		per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'], error_out=False)
+	collection = pagination.items
+	return render_template('collection.html', posts=collection, pagination=pagination)
+
+
+
+@main.route('/collect/<int:id>')
+@login_required
+def collect_toggle(id):
+	page = request.args.get('page', 1, type=int)
+	post = Post.query.get_or_404(id)
+	current_user.collect_toggle(post)
+	return redirect(url_for('.index', id=id, page=page))
