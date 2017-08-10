@@ -70,21 +70,26 @@
 				<div class="left_nav">
 					<br>
 					<li><a href="{{ url_for('.index') }}">首&emsp;&emsp;页</a></li>
+					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
 					<li><a href="{{ url_for('.show_collection', username=current_user.username) }}">我的收藏</a></li>
+					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
+					<li>待定</li>
 				</div>
 			</div>
 			<div class="right_control">
 				<div class="right_nav">
 					<br>
-					<li><a href="{{ url_for('.followers', username=current_user.username) }}">关&emsp;&emsp;注</a></li>
-					<li><a href="{{ url_for('.followed_by', username=current_user.username) }}">粉&emsp;&emsp;丝</a></li>
+					<li><a href="{{ url_for('.followers', username=current_user.username) }}">粉&emsp;&emsp;丝</a></li>
+					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
+					<li><a href="{{ url_for('.followed_by', username=current_user.username) }}">关&emsp;&emsp;注</a></li>
+					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
 					<li><a href="{{ url_for('main.user', username=current_user.username) }}">微&emsp;&emsp;博</a></li>
 				</div>
 			</div>
 		{% endif %}
 
     {% block page_content %}{% endblock %}
-	</div>
+	
 
 	{% block footer %}
 		<div class="container footer">
@@ -99,7 +104,14 @@
 			</p>
 			<br>
 		</div>
+		<div class="left-footer">
+			<p></p>
+		</div>
+		<div class="right-footer">
+			<p></p>
+		</div>
 	{% endblock %}
+	</div>
 {% endblock %}
 
 {% block scripts %}
