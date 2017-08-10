@@ -6,20 +6,15 @@
 
 {% block page_content %}
 <div class="page-header">
-	<h1>Hello,
+	<h1>您好,
 	{% if current_user.is_authenticated %}
-		{{ current_user.username }}
+		{{ current_user.username }} ! 欢迎您回来！
 	{% else %}
-		Stranger
+		游客！
 	{% endif %}
 	</h1>
 </div>
-{% if current_user.is_authenticated %}
-<div class="juxing">
-	<li><p><a href="{{ url_for('.index') }}">首页</a></p></li>
-	<li><p><a href="{{ url_for('.show_collection',username=current_user.username) }}">我的收藏</a></p><li>
-</div>
-{% endif %}
+
 <div>
 	{% if current_user.can(Permission.WRITE_ARTICLES) %}
 	{{ wtf.quick_form(form) }}
@@ -27,9 +22,13 @@
 </div>
 <div class="post-tabs">
 	<ul class="nav nav-tabs">
-		<li {% if not show_followed %} class="active" {% endif %}><a href="{{ url_for('.show_all') }}">All</a></li>
+		<li {% if not show_followed %} class="active" {% endif %}>
+			<a href="{{ url_for('.show_all') }}">所有</a>
+		</li>
 		{% if current_user.is_authenticated %}
-		<li {% if show_followed %} class="active" {% endif %}><a href="{{ url_for('.show_followed') }}">Followers</a></li>
+		<li {% if show_followed %} class="active" {% endif %}>
+			<a href="{{ url_for('.show_followed') }}">关注</a>
+		</li>
 		{% endif %}
 	</ul>
 	{% include '_posts.html' %}

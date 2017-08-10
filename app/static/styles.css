@@ -1,3 +1,48 @@
+div.right_nav {
+	position: fixed;
+	width: 100px;
+	height: 100%;
+	background: #E6E6F2;
+}
+div.left_nav {
+	position: fixed;
+	z-index: auto;
+	width: 100px; 
+	height: 100%;
+	background: #E6E6F2;
+}
+div.container {
+	width: 65%;
+}
+div.right_control {
+	font-size: 16px;
+	line-height: 50px;
+	text-align: center;
+    width: 100px;
+    height: 100%;
+    background: #E6E6F2;
+	position: absolute;
+    list-style-type:none;
+	top: 0px;
+	right: -100px;
+}
+div.left_control {
+	text-align: center;
+	line-height: 50px;
+	font-size: 16px;
+    width: 100px;
+    height: 100%;
+    background: #E6E6F2;
+    position: absolute;
+    list-style-type:none;
+	left: -100px;
+	top: 0px;
+} 
+div.container.footer {
+	background: #E6E6F2;
+	text-align: center;
+}
+
 @font-face {font-family: "iconfont";
   src: url('//at.alicdn.com/t/font_m948n40zhxhl4n29.eot?t=1502268493520'); /* IE9*/
   src: url('//at.alicdn.com/t/font_m948n40zhxhl4n29.eot?t=1502268493520#iefix') format('embedded-opentype'), /* IE6-IE8 */
@@ -49,7 +94,9 @@ li.comment {
 	border:6px solid #C7C7E2;
 }
 li.post {
-	border:6px solid #C7C7E2;
+	border:6px solid #E6E6F2;
+	border-radius: 10px;
+	background: #FCFCFC;
 }
 input#submit.btn.btn-primary {
 	width: 20%;
@@ -60,6 +107,8 @@ div#con3.page-header {
 }
 div#con1.container {
 	background: #E6E6F2;
+	width: 65%;
+	position: relative;
 }
 body {
 	background: #C7C7E2 url('liuxing.gif');
@@ -184,7 +233,7 @@ div.comment-form {
 }
 div.pagination {
 	width: 100%;
-	border-top:6px solid #C0C0C0;
+	border:6px solid #C7C7E2;
 	text-align: center;
 	padding: 0px;
 	margin: 0px;
@@ -214,12 +263,4 @@ div.flask-pagedown-preview h3 {
 }
 .table.followers tr {
 	border-bottom:1px solid #e0e0e0;
-}
-div.juxing {
-	width: 50px;
-	height: 150px;
-	background: yellow;
-	position: fixed;
-	right: 60px;
-	top: 60px;
 }

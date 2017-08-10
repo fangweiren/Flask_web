@@ -11,7 +11,7 @@
 
 {% if pagination %}
 <div class="pagination">
-	{{ macros.pagination_widget(pagination, '.index') }}
+	{{ macros.pagination_widget(pagination, '.show_collection',username=username) }}
 </div>
 {% endif %}
 
