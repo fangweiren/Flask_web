@@ -235,7 +235,7 @@ def moderate_disable(id):
 def show_collection(username):
 	user = User.query.filter_by(username=username).first()
 	page = request.args.get('page', 1, type=int)
-	pagination = user.posts_collect.paginate(page, 
+	pagination = user.posts_collect.order_by(Post.timestamp.desc()).paginate(page, 
 		per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'], error_out=False)
 	collection = pagination.items
 	return render_template('collection.html', username=username, posts=collection, pagination=pagination)
@@ -255,7 +255,7 @@ def collect_toggle(id):
 def show_like(username):
 	user = User.query.filter_by(username=username).first()
 	page = request.args.get('page', 1, type=int)
-	pagination = user.like_post.paginate(page,
+	pagination = user.like_post.order_by(Post.timestamp.desc()).paginate(page,
 		per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'], error_out=False)
 	likes = pagination.items
 	return render_template('like.html', username=username, posts=likes, pagination=pagination)

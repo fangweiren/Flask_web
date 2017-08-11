@@ -211,9 +211,6 @@ ul.posts li.post {
 ul.posts li.post:hover {
 	background-color: #f0f0f0;
 }
-div.post-date {
-	float: right;
-}
 div.post.author {
 	font-weight: bold;
 }
