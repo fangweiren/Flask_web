@@ -8,7 +8,7 @@ div.right-footer {
 }
 div.left-footer {
 	position: absolute;
-	width: 115px;
+	width: 100px;
 	height: 150px;
 	background: #E6E6F2;
 	left: -100px;
@@ -55,6 +55,7 @@ div.container.footer {
 	position: absolute;
 	width: 100%;
 	height: 150px;
+	left: 0px;
 	bottom: -150px;
 }
 

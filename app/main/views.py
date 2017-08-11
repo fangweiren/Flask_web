@@ -89,6 +89,7 @@ def edit_profile_admin(id):
 
 
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
+@login_required
 def post(id):
 	post = Post.query.get_or_404(id)
 	form = CommentForm()

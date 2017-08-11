@@ -104,12 +104,14 @@
 			</p>
 			<br>
 		</div>
+		{% if current_user.is_authenticated %}
 		<div class="left-footer">
 			<p></p>
 		</div>
 		<div class="right-footer">
 			<p></p>
 		</div>
+		{% endif %}
 	{% endblock %}
 	</div>
 {% endblock %}
