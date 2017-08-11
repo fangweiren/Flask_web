@@ -60,23 +60,30 @@ div.container.footer {
 }
 
 @font-face {font-family: "iconfont";
-  src: url('//at.alicdn.com/t/font_m948n40zhxhl4n29.eot?t=1502268493520'); /* IE9*/
-  src: url('//at.alicdn.com/t/font_m948n40zhxhl4n29.eot?t=1502268493520#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_m948n40zhxhl4n29.woff?t=1502268493520') format('woff'), /* chrome, firefox */
-  url('//at.alicdn.com/t/font_m948n40zhxhl4n29.ttf?t=1502268493520') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_m948n40zhxhl4n29.svg?t=1502268493520#iconfont') format('svg'); /* iOS 4.1- */
-}
+  src: url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.eot?t=1502428565247'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.eot?t=1502428565247#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.woff?t=1502428565247') format('woff'), /* chrome, firefox */
+  url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.ttf?t=1502428565247') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.svg?t=1502428565247#iconfont') format('svg'); /* iOS 4.1- */
+  }
 
 .iconfont {
   font-family:"iconfont" !important;
   font-size:16px;
-  font-style:normal;
   margin-left: 50px;
+  font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+a.iconfont.icon-iconfontyoujian {
+	margin-left: 0px
+}
 
-.icon-dianzan:before { content: "\e60c"; }
+.icon-dianzan1:before { content: "\e60e"; }
+
+.icon-dianzan3:before { content: "\e603"; }
+
+.icon-iconfontyoujian:before { content: "\e612"; }
 
 .icon-pinglun:before { content: "\e70e"; }
 
@@ -84,11 +91,11 @@ div.container.footer {
 
 .icon-bianji:before { content: "\e609"; }
 
+.icon-dianzan2:before { content: "\e600"; }
+
 .icon-zhuanfa:before { content: "\e60b"; }
 
 .icon-shoucang:before { content: "\e602"; }
-
-.icon-shoucang-da:before { content: "\e65a"; }
 a.a1 {
 	display: inline-block;
 	width: 13%;

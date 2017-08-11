@@ -41,8 +41,20 @@
 					<span class="iconfont icon-zhuanfa"> 转&emsp;发</span>
 				</a>
 				<a href="{{ url_for('.post', id=post.id) }}#comments">
-					<span class="iconfont icon-pinglun"> {{ post.comments.count() }} 评&emsp;论</span>
+					<span class="iconfont icon-pinglun"> 评&emsp;论 {{ post.comments.count() }}</span>
 				</a>
+				{% if current_user.is_authenticated %}
+					{% if post not in current_user.like_post.all() %}
+						<a href="{{ url_for('.like_toggle', id=post.id, page=page) }}">
+							<span class="iconfont icon-dianzan3"> 点&emsp;赞 {{ post.likes }}</span>
+						</a>
+					{% else %}
+						<a href="{{ url_for('.like_toggle', id=post.id, page=page) }}">
+                            <span class="iconfont icon-dianzan1"> 点&emsp;赞 {{ post.likes }}</span>
+                        </a>
+					{% endif %}
+				{% endif %}
+
 			</div>
 		</div>
 	</li>

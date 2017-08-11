@@ -241,11 +241,30 @@ def show_collection(username):
 	return render_template('collection.html', username=username, posts=collection, pagination=pagination)
 
 
-
 @main.route('/collect/<int:id>')
 @login_required
 def collect_toggle(id):
 	page = request.args.get('page', 1, type=int)
 	post = Post.query.get_or_404(id)
 	current_user.collect_toggle(post)
+	return redirect(url_for('.index', id=id, page=page))
+
+
+@main.route('/like/<username>')
+@login_required
+def show_like(username):
+	user = User.query.filter_by(username=username).first()
+	page = request.args.get('page', 1, type=int)
+	pagination = user.like_post.paginate(page,
+		per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'], error_out=False)
+	likes = pagination.items
+	return render_template('like.html', username=username, posts=likes, pagination=pagination)
+
+
+@main.route('/like/<int:id>')
+@login_required
+def like_toggle(id):
+	page = request.args.get('page', 1, type=int)
+	post = Post.query.get_or_404(id)
+	current_user.like_toggle(post)
 	return redirect(url_for('.index', id=id, page=page))

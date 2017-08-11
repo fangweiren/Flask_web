@@ -14,6 +14,10 @@ user_collect_post = db.Table('collection',
 	db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
 	db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
 
+user_like_post = db.Table('like',
+	db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+	db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
+
 
 class Permission:
 	FOLLOW = 0x01
@@ -81,6 +85,9 @@ class User(UserMixin, db.Model):
 	comments = db.relationship('Comment', backref='author', lazy='dynamic')
 	posts_collect = db.relationship('Post', secondary=user_collect_post,
 									backref=db.backref('users_collect', lazy='dynamic'),
+									lazy='dynamic')
+	like_post = db.relationship('Post', secondary=user_like_post,
+									backref=db.backref('user_like', lazy='dynamic'),
 									lazy='dynamic')
 
 
@@ -229,6 +236,16 @@ class User(UserMixin, db.Model):
 			self.posts_collect.append(post)
 		else:
 			self.posts_collect.remove(post)
+	
+	def like_toggle(self, post):
+		if post not in self.like_post.all():
+			self.like_post.append(post)
+			post.likes += 1
+			db.session.add(post)
+		else:
+			self.like_post.remove(post)
+			post.likes -= 1
+			db.session.add(post)
 
 	@property
 	def followed_posts(self):
@@ -285,6 +302,7 @@ class Post(db.Model):
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	comments = db.relationship('Comment', backref='post', lazy='dynamic')
+	likes = db.Column(db.Integer, default=0, index=True)
 
 	@staticmethod
 	def generate_fake(count=100):
@@ -300,6 +318,16 @@ class Post(db.Model):
 					 author=u)
 			db.session.add(p)
 			db.session.commit()
+
+	@staticmethod
+	def likes_to_0():
+		post_count = Post.query.count()
+		for i in range(post_count):
+			post = Post.query.filter_by(likes=None).first()
+			post.likes = 0
+			db.session.add(post)
+			db.session.commit()
+			print post.id,
 
 	@staticmethod
 	def on_changed_body(target, value, oldvalue, initiator):
