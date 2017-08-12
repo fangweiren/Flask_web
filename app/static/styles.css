@@ -1,3 +1,7 @@
+ul.nav.navbar-nav li a:hover{color:red;}
+ul.dropdown-menu a:hover{color:red;}
+ul.dropdown-menu.pull-right a:hover{color:red;}
+a:hover{color:red;}
 div.right-footer {
 	position: absolute;
 	width: 100px;
@@ -26,6 +30,7 @@ div.right_nav,div.left_nav {
 }
 div.container {
 	width: 65%;
+	min-width:85%;
 }
 div.right_control {
 	font-size: 16px;	
@@ -60,42 +65,39 @@ div.container.footer {
 }
 
 @font-face {font-family: "iconfont";
-  src: url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.eot?t=1502428565247'); /* IE9*/
-  src: url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.eot?t=1502428565247#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.woff?t=1502428565247') format('woff'), /* chrome, firefox */
-  url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.ttf?t=1502428565247') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('//at.alicdn.com/t/font_379834_3z2wrgps4ua3jtt9.svg?t=1502428565247#iconfont') format('svg'); /* iOS 4.1- */
-  }
+  src: url('//at.alicdn.com/t/font_379834_23yxii3lr9o4j9k9.eot?t=1502516879727'); /* IE9*/
+  src: url('//at.alicdn.com/t/font_379834_23yxii3lr9o4j9k9.eot?t=1502516879727#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/font_379834_23yxii3lr9o4j9k9.woff?t=1502516879727') format('woff'), /* chrome, firefox */
+  url('//at.alicdn.com/t/font_379834_23yxii3lr9o4j9k9.ttf?t=1502516879727') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/font_379834_23yxii3lr9o4j9k9.svg?t=1502516879727#iconfont') format('svg'); /* iOS 4.1- */
+}
 
 .iconfont {
   font-family:"iconfont" !important;
   font-size:16px;
-  margin-left: 50px;
+  margin-left: 40px;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.icon-xiangxia:before { content: "\e601"; }
+.icon-xiangshang:before { content: "\e621"; }
+.icon-dianzan1:before { content: "\e60e"; }
+.icon-dianzan3:before { content: "\e603"; }
+.icon-iconfontyoujian:before { content: "\e612"; }
+.icon-pinglun:before { content: "\e70e"; }
+.icon-shoucang1:before { content: "\e60d"; }
+.icon-bianji:before { content: "\e609"; }
+.icon-dianzan2:before { content: "\e600"; }
+.icon-zhuanfa:before { content: "\e60b"; }
+.icon-shoucang:before { content: "\e602"; }
+.icon-xiangshang1:before { content: "\e70f"; }
+span.iconfont.icon-xiangxia { float: right; margin-left: 0px;}
 a.iconfont.icon-iconfontyoujian {
-	margin-left: 0px
+	margin-left: 0px;
 }
 
-.icon-dianzan1:before { content: "\e60e"; }
-
-.icon-dianzan3:before { content: "\e603"; }
-
-.icon-iconfontyoujian:before { content: "\e612"; }
-
-.icon-pinglun:before { content: "\e70e"; }
-
-.icon-shoucang1:before { content: "\e60d"; }
-
-.icon-bianji:before { content: "\e609"; }
-
-.icon-dianzan2:before { content: "\e600"; }
-
-.icon-zhuanfa:before { content: "\e60b"; }
-
-.icon-shoucang:before { content: "\e602"; }
 a.a1 {
 	display: inline-block;
 	width: 13%;
@@ -131,6 +133,7 @@ div#con3.page-header {
 div#con1.container {
 	background: #E6E6F2;
 	width: 65%;
+	min-width: 80%;
 	position: relative;
 	min-height: 100%;
 }
@@ -209,7 +212,7 @@ ul.posts li.post {
 	border-bottom: 1px solid #e0e0e0;
 }
 ul.posts li.post:hover {
-	background-color: #f0f0f0;
+	background-color: #96FED1;
 }
 div.post.author {
 	font-weight: bold;

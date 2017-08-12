@@ -1,3 +1,4 @@
+#coding:utf-8
 from datetime import datetime
 from flask import render_template, session, redirect, url_for, abort, flash, request, current_app,\
 	make_response
@@ -106,6 +107,15 @@ def post(id):
 	comments = pagination.items
 	return render_template('post.html', posts=[post], form=form, comments=comments,
 		pagination=pagination)
+
+
+@main.route('/delete/<int:id>')
+@login_required
+def delete_post(id):
+	post = Post.query.get_or_404(id)
+	db.session.delete(post)
+	flash('文章已删除')
+	return redirect(url_for('.index'))
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
