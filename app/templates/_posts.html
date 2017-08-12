@@ -11,13 +11,15 @@
 				<a href="#" class="dropdown-cancel" data-toggle="dropdown">
 					<span class="iconfont icon-xiangxia"></span>
 				</a>
-				<ul class="dropdown-menu pull-right" style="top: 20px; background:#E6E6F2">
+				<ul class="dropdown-menu pull-right" style="top: 20px; background:#E6E6F2;text-align:left;">
 					{% if current_user == post.author %}
 					<li><a href="{{ url_for('.delete_post',id=post.id) }}">删除</a></li>
 					{% elif current_user.is_administrator() %}
 					<li><a href="{{ url_for('.delete_post',id=post.id) }}">删除[Admin]</a></li>
 					{% endif %}
-					<li>屏蔽这条微博</li>
+					<li><a>屏蔽这条微博</a></li>
+					<li><a>屏蔽 {{ post.author.username }}</a></li>
+					<li><a>举报</a></li>
 				</ul>
 			</div>
 			<div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
