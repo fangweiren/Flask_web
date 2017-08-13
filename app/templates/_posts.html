@@ -13,7 +13,8 @@
 				</a>
 				<ul class="dropdown-menu pull-right" style="top: 20px; background:#E6E6F2;text-align:left;">
 					{% if current_user == post.author %}
-					<li><a href="{{ url_for('.delete_post',id=post.id) }}">删除</a></li>
+					<li><a href='javascript:;' onclick='if(confirm("您确定删除这条记录？"))
+					{location.href="{{ url_for('.delete_post', id=post.id) }}";}'>删除</a></li>
 					{% elif current_user.is_administrator() %}
 					<li><a href="{{ url_for('.delete_post',id=post.id) }}">删除[Admin]</a></li>
 					{% endif %}

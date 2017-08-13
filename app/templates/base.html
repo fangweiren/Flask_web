@@ -7,6 +7,8 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+<script type="text/JavaScript" src="{{ url_for('static', filename='jquery-3.2.1.js') }}"></script>
+<script type="text/JavaScript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
 {% endblock %}
 
 {% block navbar %}
@@ -69,19 +71,19 @@
 			<div class="left_control">
 				<div class="left_nav">
 					<br>
-					<li><a href="{{ url_for('.index') }}">首&emsp;&emsp;页</a></li>
+					<li><a href="{{ url_for('main.index') }}">首&emsp;&emsp;页</a></li>
 					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
-					<li><a href="{{ url_for('.show_collection', username=current_user.username) }}">我的收藏</a></li>
+					<li><a href="{{ url_for('main.show_collection', username=current_user.username) }}">我的收藏</a></li>
 					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
-					<li><a href="{{ url_for('.show_like', username=current_user.username) }}">我&ensp;的&ensp;赞</a></li>
+					<li><a href="{{ url_for('main.show_like', username=current_user.username) }}">我&ensp;的&ensp;赞</a></li>
 				</div>
 			</div>
 			<div class="right_control">
 				<div class="right_nav">
 					<br>
-					<li><a href="{{ url_for('.followers', username=current_user.username) }}">粉&emsp;&emsp;丝</a></li>
+					<li><a href="{{ url_for('main.followers', username=current_user.username) }}">粉&emsp;&emsp;丝</a></li>
 					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
-					<li><a href="{{ url_for('.followed_by', username=current_user.username) }}">关&emsp;&emsp;注</a></li>
+					<li><a href="{{ url_for('main.followed_by', username=current_user.username) }}">关&emsp;&emsp;注</a></li>
 					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
 					<li><a href="{{ url_for('main.user', username=current_user.username) }}">微&emsp;&emsp;博</a></li>
 				</div>
