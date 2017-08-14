@@ -2,6 +2,7 @@ from datetime import datetime
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from jieba.analyse import ChineseAnalyzer
 from markdown import markdown
 import bleach
 from flask import current_app, request, url_for
@@ -296,6 +297,9 @@ def load_user(user_id):
 
 class Post(db.Model):
 	__tablename__ = 'posts'
+	__analyzer__ = ChineseAnalyzer()
+	__searchable__ = ['body']
+
 	id = db.Column(db.Integer, primary_key=True)
 	body = db.Column(db.Text)
 	body_html = db.Column(db.Text)
@@ -303,6 +307,7 @@ class Post(db.Model):
 	author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	comments = db.relationship('Comment', backref='post', lazy='dynamic')
 	likes = db.Column(db.Integer, default=0, index=True)
+
 
 	@staticmethod
 	def generate_fake(count=100):
@@ -357,7 +362,6 @@ class Post(db.Model):
 		return Post(body=body)
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
-
 
 class Comment(db.Model):
 	__tablename__ = 'comments'

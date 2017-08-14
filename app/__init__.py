@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import config
 from flask_login import LoginManager
 from flask_pagedown import PageDown
+import flask_whooshalchemyplus
 
 bootstrap = Bootstrap()
 mail = Mail()
@@ -29,7 +30,9 @@ def create_app(config_name):
 	db.init_app(app)
 	login_manager.init_app(app)
 	pagedown.init_app(app)
-
+	flask_whooshalchemyplus.init_app(app)
+	
+	
 	from .main import main as main_blueprint
 	app.register_blueprint(main_blueprint)
 	from .auth import auth as auth_blueprint
@@ -38,5 +41,4 @@ def create_app(config_name):
 	from .api_1_0 import api as api_1_0_blueprint
 	app.register_blueprint(api_1_0_blueprint, url_prefix='/api/v1.0')
 
-	#中文
 	return app

@@ -29,9 +29,10 @@
 			     <li><a href="{{ url_for('main.index') }}">首页</a></li>
 				 {% if current_user.is_authenticated %}
 				 <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
-				 {% endif %}
-				 <li><a href="https://github.com/fangweiren/myflask">Github</a></li>
-				 <li><a href="http://fangweiren843.blog.163.com/">网易博客</a></li>
+				 <form class="navbar-form navbar-left" style="display:inline;" action="{{ url_for('main.search') }}" method="post" name="search">
+				 	{{ g.search_form.hidden_tag() }}{{ g.search_form.search(size=20) }}<input type="submit" value="搜索"></input>
+				</form>
+				{% endif %}
 			 </ul>
 			 <ul class="nav navbar-nav navbar-right">
 			 	{% if current_user.can(Permission.MODERATE_COMMENTS) %}
@@ -76,6 +77,8 @@
 					<li><a href="{{ url_for('main.show_collection', username=current_user.username) }}">我的收藏</a></li>
 					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
 					<li><a href="{{ url_for('main.show_like', username=current_user.username) }}">我&ensp;的&ensp;赞</a></li>
+					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
+					<li><a href="https://github.com/fangweiren/myflask">Github</a></li>
 				</div>
 			</div>
 			<div class="right_control">
@@ -86,6 +89,8 @@
 					<li><a href="{{ url_for('main.followed_by', username=current_user.username) }}">关&emsp;&emsp;注</a></li>
 					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
 					<li><a href="{{ url_for('main.user', username=current_user.username) }}">微&emsp;&emsp;博</a></li>
+					<hr style='background-color:#FCFCFC;height:5px;border:none;'>
+					<li><a href="http://fangweiren843.blog.163.com/">网易博客</a></li>
 				</div>
 			</div>
 		{% endif %}

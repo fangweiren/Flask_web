@@ -1,5 +1,7 @@
 import os
 basedir = os.path.abspath(os.path.dirname(__file__))
+WHOOSH_BASE = os.path.join(basedir, 'search.db')
+
 
 class Config:
 	SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
@@ -12,6 +14,7 @@ class Config:
 	FLASKY_POSTS_PER_PAGE = 20
 	FLASKY_FOLLOWERS_PER_PAGE = 50
 	FLASKY_COMMENTS_PER_PAGE = 30
+	MAX_SEARCH_RESULTS = 50
 
 	@staticmethod
 	def init_app(app):

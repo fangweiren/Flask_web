@@ -48,3 +48,7 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
 	body = StringField('请输入你的评论', validators=[Required()])
 	submit = SubmitField('评论')
+
+
+class SearchForm(FlaskForm):
+	search = StringField('搜索', validators=[Required()])

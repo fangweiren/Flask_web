@@ -1,10 +1,10 @@
 #coding:utf-8
 from datetime import datetime
 from flask import render_template, session, redirect, url_for, abort, flash, request, current_app,\
-	make_response
+	make_response, g
 from flask_login import login_required, current_user
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm
+from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SearchForm
 from .. import db
 from ..models import Permission, User, Role, Post, Comment
 from ..decorators import admin_required, permission_required
@@ -278,3 +278,28 @@ def like_toggle(id):
 	post = Post.query.get_or_404(id)
 	current_user.like_toggle(post)
 	return redirect(url_for('.index', id=id, page=page))
+
+
+@main.before_request
+def before_request():
+	g.user = current_user
+	if g.user.is_authenticated:
+		g.user.last_seen = datetime.utcnow()
+		db.session.add(g.user)
+		db.session.commit()
+		g.search_form = SearchForm()
+
+
+@main.route('/search', methods=['POST'])
+@login_required
+def search():
+	if not g.search_form.validate_on_submit():
+		return redirect(url_for('main.index'))
+	return redirect(url_for('main.search_results', query = g.search_form.search.data))
+
+
+@main.route('/search_results/<query>')
+@login_required
+def search_results(query):
+	results = Post.query.whoosh_search(query).all()
+	return render_template('search.html', query=query, posts=results)

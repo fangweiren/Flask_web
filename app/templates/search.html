@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Flasky - search{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>搜索关键词： "{{query}}"</h1>
+</div>
+{% include "_posts.html" %}
+
+{% if pagination %}
+<div class="pagination">
+	{{ macros.pagination_widget(pagination, 'main.search_results',username=username) }}
+</div>
+{% endif %}
+
+{% endblock %}

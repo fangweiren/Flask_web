@@ -1,3 +1,6 @@
+form.navbar-form {
+	padding-top: 3px;
+}
 ul.nav.navbar-nav li a:hover{color:red;}
 ul.dropdown-menu a:hover{color:red;}
 ul.dropdown-menu.pull-right a:hover{color:red;}
@@ -21,7 +24,7 @@ div.left-footer {
 div.right_nav,div.left_nav {
 	position: fixed;
 	width: 100px;
-	height: 216px;
+	height: 288px;
 	background: #E6E6F2;
 	border: 6px solid #FCFCFC;
 	display: table-cell;
