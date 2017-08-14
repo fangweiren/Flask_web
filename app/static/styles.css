@@ -1,3 +1,10 @@
+div.go-top {
+	bottom: 160px;
+	background: #FFFFCE;
+	display: none;
+	position: fixed;
+	cursor: pointer;
+}
 form.navbar-form {
 	padding-top: 3px;
 }
@@ -23,6 +30,7 @@ div.left-footer {
 }
 div.right_nav,div.left_nav {
 	position: fixed;
+	z-index: 99;
 	width: 100px;
 	height: 288px;
 	background: #E6E6F2;
@@ -30,10 +38,6 @@ div.right_nav,div.left_nav {
 	display: table-cell;
 	vertical-align: middle;
 
-}
-1div.container {
-	width: 65%;
-	min-width:45%;
 }
 div.right_control {
 	font-size: 16px;	
@@ -97,6 +101,7 @@ div.container.footer {
 .icon-shoucang:before { content: "\e602"; }
 .icon-xiangshang1:before { content: "\e70f"; }
 span.iconfont.icon-xiangxia { float: right; margin-left: 0px;}
+a.iconfont.icon-xiangshang1 { margin-left: 0px;}
 a.iconfont.icon-iconfontyoujian {
 	margin-left: 0px;
 }

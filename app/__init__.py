@@ -1,4 +1,4 @@
-# coding:utf-8
+#coding:utf-8
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
@@ -8,6 +8,7 @@ from config import config
 from flask_login import LoginManager
 from flask_pagedown import PageDown
 import flask_whooshalchemyplus
+#from flask_whooshalchemyplus import index_all
 
 bootstrap = Bootstrap()
 mail = Mail()
@@ -31,6 +32,8 @@ def create_app(config_name):
 	login_manager.init_app(app)
 	pagedown.init_app(app)
 	flask_whooshalchemyplus.init_app(app)
+#	with app.app_context():
+#		index_all(app)
 	
 	
 	from .main import main as main_blueprint

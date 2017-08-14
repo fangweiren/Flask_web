@@ -297,8 +297,8 @@ def load_user(user_id):
 
 class Post(db.Model):
 	__tablename__ = 'posts'
-	__analyzer__ = ChineseAnalyzer()
 	__searchable__ = ['body']
+	__analyzer__ = ChineseAnalyzer()
 
 	id = db.Column(db.Integer, primary_key=True)
 	body = db.Column(db.Text)
