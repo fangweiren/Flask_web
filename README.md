@@ -1,3 +1,157 @@
+# 全文搜索实现(Whooshalchemyplus + jieba分词)
+
+### 准备工作
+由于Flask-WhooshAlchemy不支持中文分词搜索, 所以需要Flask-WhooshAlchemyPlus来替代之，然后再安装jieba分词。  
+如果你暂时没有在虚拟环境上安装Flask-WhooshAlchemyPlus，请安装它。
+<pre><code>
+pip install Flask-WhooshAlchemy  
+pip install jieba
+</code></pre>
+### 配置
+配置 Flask-WhooshAlchemyPlus 也是相当简单。我们只需要告诉扩展全文搜索数据库的名称(文件config.py):
+<pre><code>WHOOSH_BASE = os.path.join(basedir, 'search.db')
+</code></pre>
+### 模型修改
+因为把 Flask-WhooshAlchemyPlus 整合进 Flask-SQLAlchemy，我们需要在模型的类中指明哪些数据需要建立搜索索引(文件 app/models.py):
+<pre><code>
+from jieba.analyse import ChineseAnalyzer
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+    __analyzer__ = ChineseAnalyzer()
+    __searchable__ = ['body']
+
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    #...
+</code></pre>
+模型有一个新的 __searchable__ 字段，这里面包含数据库中的所有能被搜索并且建立索引的字段。在我们的例子中，我们只要索引 blog 的 body 字段。  
+因为这个改变并不影响到关系数据库的格式，因此不需要录制新的迁移脚本。  
+
+### 初始化(app/__init__.py)
+<pre><code>
+import flask_whooshalchemyplus
+from flask_whooshalchemyplus import index_all
+
+def create_app(config_name):
+    app = Flask(__name__)
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
+
+    bootstrap.init_app(app)
+    mail.init_app(app)
+    moment.init_app(app)
+    db.init_app(app)                                                                                  
+    login_manager.init_app(app)
+    pagedown.init_app(app)
+    flask_whooshalchemyplus.init_app(app)        #初始化
+    with app.app_context():                      #手动索引 
+        index_all(app)
+    
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
+    #...
+</code></pre>
+因为之前存储在数据库的 blog 是没有建立索引的。为了保持数据库和全文搜索引擎的同步，我们添加以下代码，由于这段代码运行加载很慢，所以建立索引后我就把它删了。
+<pre><code>
+from flask_whooshalchemyplus import index_all
+    with app.app_context():
+        index_all(app)
+</code></pre>
+
+### 搜索
+现在假设我们在全文索引中有一些 blog，我们可以这样搜索:
+
+```
+>>> Post.query.whoosh_search('post').all()  
+[<Post u'my second post'>, <Post u'my first post'>, <Post u'my third and last post'>]  
+>>> Post.query.whoosh_search('second').all()  
+[<Post u'my second post'>]  
+>>> Post.query.whoosh_search('second OR last').all()  
+[<Post u'my second post'>, <Post u'my third and last post'>]
+```
+
+在上面例子中你可以看到，查询并不限制于单个词。实际上，Whoosh 支持一个更加强大的搜索查询语言。
+
+### 搜索表单
+我们准备在导航栏中添加一个搜索表单。把表单放在导航栏中是有好处的，因为应用程序所有页都有搜索表单。
+
+首先，我们添加一个搜索表单类(文件 app/main/forms.py):
+<pre><code>
+class SearchForm(Form):
+    search = StringField('搜索', validators=[Required()])
+</code></pre>
+接着我们必须创建一个搜索表单对象并且使得它对所有模版中可用，因为我们将搜索表单放在导航栏中，导航栏是所有页面共有的。最容易的方式就是在 before_request 函数中创建这个表单对象，接着把它放在全局变量 g 中(文件 app/main/views.py):
+<pre><code>
+@main.before_request
+def before_request():
+    g.user = current_user
+    if g.user.is_authenticated:
+        g.user.last_seen = datetime.utcnow()
+        db.session.add(g.user)
+        db.session.commit()
+        g.search_form = SearchForm()
+</code></pre>
+我们接着添加表单到模板中(文件 app/templates/base.html):
+
+```
+<li><a href="{{ url_for('main.index') }}">首页</a></li>
+{% if current_user.is_authenticated %}
+<li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
+    <form class="navbar-form navbar-left" style="display:inline;" action="{{ url_for('main.search') }}" method="post" name="search">
+        {{ g.search_form.hidden_tag() }}{{ g.search_form.search(size=20) }}<input type="submit" value="搜索"></input>
+    </form>
+{% endif %}
+```
+
+注意，只有当用户登录后，我们才会显示搜索表单。before_request 函数仅仅当用户登录才会创建一个表单对象，因为我们的程序不会对非认证用户显示任何内容。
+
+### 搜索视图函数
+上面的模版中，我们在 action 字段中设置发送搜索请求到 search 视图函数。search 视图函数如下(文件 app/main/views.py):
+<pre><code>
+@main.route('/search', methods=['POST'])
+@login_required
+def search():
+	if not g.search_form.validate_on_submit():
+		return redirect(url_for('main.index'))
+	return redirect(url_for('main.search_results', query = g.search_form.search.data))
+</code></pre>
+
+这个函数实际做的事情不多，它只是从查询表单这能够获取查询的内容，并把它作为参数重定向另外一页。搜索工作不在这里直接做的原因还是担心用户无意中触发了刷新，这样会导致表单数据被重复提交。
+
+### 搜索结果页
+一旦查询的关键字被接收到，search_results 函数就会开始工作(文件 app/main/views.py):
+<pre><code>
+@main.route('/search_results/<query>')
+@login_required
+def search_results(query):
+	results = Post.query.whoosh_search(query).all()
+	return render_template('search.html', query=query, posts=results)
+</code></pre>
+
+
+最后一部分就是搜索结果的模版(文件 app/templates/search.html):
+
+```
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Flasky - search{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>搜索关键词： "{{query}}"</h1>
+</div>
+{% include "_posts.html" %}
+{% endblock %}
+```
+
+### 参考文章
+[全文搜索](http://www.pythondoc.com/flask-mega-tutorial/textsearch.html#id8)  
+[请教使用Flask-WhooshAlchemy做全文搜索时中文的模糊搜索问题](http://cocode.cc/t/flask-whooshalchemy/1529/6)  
+[Welcome to Flask-WhooshAlchemyPlus!](https://github.com/Revolution1/Flask-WhooshAlchemyPlus)
+
+# -------------------------------------------------------------------
 # 阿里云服务器部署 nginx + gunicorn + supervisor + flask
 
 ## 前言：  
