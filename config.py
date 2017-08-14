@@ -15,6 +15,7 @@ class Config:
 	FLASKY_FOLLOWERS_PER_PAGE = 50
 	FLASKY_COMMENTS_PER_PAGE = 30
 	MAX_SEARCH_RESULTS = 50
+	UPLOAD_FOLDER = os.getcwd() + '/app/static/avatar/'
 
 	@staticmethod
 	def init_app(app):

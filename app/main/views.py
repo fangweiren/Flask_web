@@ -53,8 +53,18 @@ def edit_profile():
 		current_user.name = form.name.data
 		current_user.location = form.location.data
 		current_user.about_me = form.about_me.data
+		avatar = request.files['avatar']
+		fname = avatar.filename
+		UPLOAD_FOLDER = current_app.config['UPLOAD_FOLDER']
+		ALLOWED_EXTENSIONS = ['png', 'gif', 'jpeg', 'jpg']
+		flag = '.' in fname and fname.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+		if not flag:
+			flash('类型错误,图片格式错误')
+			return redirect(url_for('.user', username= current_user.username))
+		avatar.save('{}{}_{}'.format(UPLOAD_FOLDER, current_user.username, fname))
+		current_user.avatar = '/static/avatar/{}_{}'.format(current_user.username, fname)
 		db.session.add(current_user)
-		flash('Your profile has been updated.')
+		flash('个人资料已更新')
 		return redirect(url_for('.user', username=current_user.username))
 	form.name.data = current_user.name
 	form.location.data = current_user.location
