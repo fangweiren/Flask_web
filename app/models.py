@@ -1,3 +1,4 @@
+#coding:utf-8
 from datetime import datetime
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -114,6 +115,23 @@ class User(UserMixin, db.Model):
 				db.session.commit()
 			except IntegrityError:
 				db.session.rollback()
+
+	@staticmethod
+	def generate_likes(count=100):
+		from random import randint
+		for i in range(count):
+			u = User.query.get(randint(1, User.query.count()))
+			p = Post.query.get(randint(1, Post.query.count()))
+			if u and p not in u.like_post.all():
+				u.like_post.append(p)
+				db.session.add(p)
+
+		posts = Post.query.all()
+		for post in posts:
+			post.likes = randint(1,300)
+			print '生成点赞数',post.likes
+			db.session.add(post)
+		db.session.commit()
 
 	@staticmethod
 	def add_self_follows():
