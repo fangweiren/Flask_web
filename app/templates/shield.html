@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Nancy - 屏蔽的微博{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<h1>我屏蔽的微博</h1>
+</div>
+{% include "_posts.html" %}
+
+{% if pagination %}
+<div class="pagination">
+	{{ macros.pagination_widget(pagination, '.show_shield',username=username) }}
+</div>
+{% endif %}
+
+{% endblock %}

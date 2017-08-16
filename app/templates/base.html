@@ -9,19 +9,9 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 <script type="text/JavaScript" src="{{ url_for('static', filename='jquery-3.2.1.js') }}"></script>
 <script type="text/JavaScript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
-<script>
-$(function() {
-    $(window).scroll(function() {
-        if ($(window).scrollTop() > 1000)
-            $('div.go-top').show();
-        else
-            $('div.go-top').hide();
-    });
-    $('div.go-top').click(function() {
-        $('html, body').animate({scrollTop: 0}, 1000);
-    });
-});
-</script>
+<script type="text/JavaScript" src="{{ url_for('static', filename='gotop.js') }}"></script>
+<script type="text/JavaScript" src="{{ url_for('static', filename='shield.js') }}"></script>
+<script type="text/JavaScript" src="{{ url_for('static', filename='unblock.js') }}"></script>
 {% endblock %}
 
 {% block navbar %}
@@ -43,7 +33,7 @@ $(function() {
 				 {% if current_user.is_authenticated %}
 				 <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
 				 <form class="navbar-form navbar-left" style="display:inline;" action="{{ url_for('main.search') }}" method="post" name="search">
-				 	{{ g.search_form.hidden_tag() }}{{ g.search_form.search(size=20) }}<input type="submit" value="search"></input>
+				 	{{ g.search_form.hidden_tag() }}{{ g.search_form.search(size=20) }}<input type="submit" value="search">
 				</form>
 				{% endif %}
 			 </ul>
@@ -63,6 +53,7 @@ $(function() {
 					<ul class="dropdown-menu">
 						<li><a href="{{ url_for('auth.change_password') }}">修改密码</a></li>
 						<li><a href="{{ url_for('auth.change_email_request') }}">更换邮箱</a></li>
+						<li><a href="{{ url_for('main.show_shield', username=current_user.username) }}">屏蔽设置</a></li>
 						<li><a href="{{ url_for('auth.logout') }}">退&emsp;&emsp;出</a></li>
 					</ul>
 				</li>

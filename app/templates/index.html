@@ -31,7 +31,11 @@
 		</li>
 		{% endif %}
 	</ul>
+	{% if current_user.is_authenticated %}
+	{% include '_shield_posts.html' %}
+	{% else %}
 	{% include '_posts.html' %}
+	{% endif %}
 </div>
 {% if pagination %}
 <div class="pagination">

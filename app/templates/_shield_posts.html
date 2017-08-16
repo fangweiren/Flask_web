@@ -1,5 +1,6 @@
 <ul class="posts">
 	{% for post in posts %}
+	{% if post not in current_user.shield_post.all() %}
 	<li class="post">
 		<div class="post-thumbnail">
 			<a href="{{ url_for('.user', username=post.author.username) }}">
@@ -12,11 +13,9 @@
 		</div>
 		<div class="post-content">
 			<div class="dropdown">
-				{% if current_user.is_authenticated %}
 				<a href="#" class="dropdown-cancel" data-toggle="dropdown">
 					<span class="iconfont icon-xiangxia"></span>
 				</a>
-				{% endif %}
 				<ul class="dropdown-menu pull-right" style="top: 20px; background:#E6E6F2;text-align:left;">
 					{% if current_user == post.author %}
 					<li><a href='javascript:;' onclick='if(confirm("您确定删除这条记录？"))
@@ -25,11 +24,7 @@
 					<li><a href="{{ url_for('.delete_post',id=post.id) }}">删除[Admin]</a></li>
 					{% endif %}
 					{% if current_user != post.author %}
-						{% if post not in current_user.shield_post.all() %}
-						<li><a href="{{ url_for('.shield_post', id=post.id) }}" onclick="javascript:return shield();">屏蔽这条微博</a></li>
-						{% else %}
-						<li><a href="{{ url_for('.unblock_post', id=post.id) }}" onclick="javascript:return unblock();">解除屏蔽</a></li>
-						{% endif %}
+					<li><a href="{{ url_for('.shield_post', id=post.id) }}" onclick="javascript:return shield();">屏蔽这条微博</a></li>
 					{% endif %}
 					<li><a>屏蔽 {{ post.author.username }}</a></li>
 					<li><a>举报</a></li>
@@ -92,5 +87,6 @@
 			</div>
 		</div>
 	</li>
+	{% endif %}
 	{% endfor %}
 </ul>

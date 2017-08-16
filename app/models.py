@@ -20,6 +20,10 @@ user_like_post = db.Table('like',
 	db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
 	db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
 
+user_shield_post = db.Table('shield',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
+
 
 class Permission:
 	FOLLOW = 0x01
@@ -91,6 +95,9 @@ class User(UserMixin, db.Model):
 									lazy='dynamic')
 	like_post = db.relationship('Post', secondary=user_like_post,
 									backref=db.backref('user_like', lazy='dynamic'),
+									lazy='dynamic')
+	shield_post = db.relationship('Post', secondary=user_shield_post,
+									backref=db.backref('user_shield', lazy='dynamic'),
 									lazy='dynamic')
 
 
@@ -266,6 +273,11 @@ class User(UserMixin, db.Model):
 			self.like_post.remove(post)
 			post.likes -= 1
 			db.session.add(post)
+
+	def add_shield(self, post):
+		if post not in self.shield_post.all():
+			self.shield_post.append(post)
+
 
 	@property
 	def followed_posts(self):

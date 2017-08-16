@@ -12,8 +12,8 @@ class NameForm(FlaskForm):
 	submit = SubmitField('发布')
 
 class EditProfileForm(FlaskForm):
-	name = StringField('真实姓名', validators=[Length(0, 64)])
 	avatar = FileField('自定义头像')
+	name = StringField('真实姓名', validators=[Length(0, 64)])
 	location = StringField('所在地', validators=[Length(0, 64)])
 	about_me = TextAreaField('自我介绍')
 	submit = SubmitField('提交')

@@ -290,6 +290,34 @@ def like_toggle(id):
 	return redirect(url_for('.index', id=id, page=page))
 
 
+@main.route('/shield/<username>')
+@login_required
+def show_shield(username):
+	user = User.query.filter_by(username=username).first()
+	page = request.args.get('page', 1, type=int)
+	pagination = user.shield_post.paginate(page,
+		per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'], error_out=False)
+	shields = pagination.items
+	return render_template('shield.html', username=username, posts=shields, pagination=pagination)
+
+
+@main.route('/shield/<int:id>')
+@login_required
+def shield_post(id):
+	post = Post.query.get_or_404(id)
+	current_user.add_shield(post)
+	flash('该微博已屏蔽') 
+	return redirect(url_for('.index'))
+
+@main.route('/unblock/<int:id>')
+@login_required
+def unblock_post(id):
+	post = Post.query.get_or_404(id)
+	current_user.shield_post.remove(post)
+	flash('该微博屏蔽已解除')
+	return redirect(url_for('.show_shield', username=current_user.username))
+
+
 @main.before_request
 def before_request():
 	g.user = current_user
