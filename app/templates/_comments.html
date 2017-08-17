@@ -25,15 +25,23 @@
 					{% endif %}
 				{% endif %}
 			</div>
-			{% if moderate %}
-				{% if comment.disabled %}
-				<a class="btn btn-default btn-xs" href="{{ url_for('.moderate_enable', id=comment.id,
-					page=page) }}">显示</a>
+			<div class="comment-footer">
+				{% if moderate %}
+					{% if comment.disabled %}
+					<a class="btn btn-default btn-xs" href="{{ url_for('.moderate_enable', id=comment.id,page=page) }}">显示</a>
+					{% else %}
+					<a class="btn btn-danger btn-xs" href="{{ url_for('.moderate_disable', id=comment.id,page=page) }}">屏蔽</a>
+					{% endif %}
 				{% else %}
-				<a class="btn btn-danger btn-xs" href="{{ url_for('.moderate_disable', id=comment.id,
-					page=page) }}">屏蔽</a>
+				<div class="fixright">
+					{% if comment not in current_user.like_comments.all() %}
+					<a href="{{ url_for('.like_comment_toggle', id=comment.id) }}"><span class="iconfont icon-dianzan3">点赞{{ comment.likes }}<span></a>
+					{% else %}
+					<a href="{{ url_for('.like_comment_toggle', id=comment.id) }}"><span class="iconfont icon-dianzan1">点赞{{ comment.likes }}<span></a>
+					{% endif %}
+				</div>
 				{% endif %}
-			{% endif %}
+			</div>
 		</div>
 	</li>
 	{% endfor %}

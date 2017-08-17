@@ -1,3 +1,9 @@
+div.choice {
+	text-align: right;
+}
+div.fixright {
+	text-align: right;
+}
 div.go-top {
 	bottom: 160px;
 	display: none;
@@ -102,7 +108,6 @@ div.container.footer {
 span.iconfont.icon-xiangxia { float: right; margin-left: 0px;}
 a.iconfont.icon-fanhuidingbu { margin-left: 30px; font-size: 32px;}
 a.iconfont.icon-iconfontyoujian { margin-left: 0px;}
-
 a.a1 {
 	display: inline-block;
 	width: 13%;
@@ -242,7 +247,7 @@ ul.comments li.comment {
 	padding: 8px;
 	border-bottom: 1px solid #e0e0e0;
 }
-ul.comments li.comment:nth-child(1) {
+12ul.comments li.comment:nth-child(1) {
 	border-top: 1px solid #e0e0e0;
 }
 ul.comment li.comment:hover {

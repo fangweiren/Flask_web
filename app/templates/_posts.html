@@ -19,12 +19,12 @@
 				{% endif %}
 				<ul class="dropdown-menu pull-right" style="top: 20px; background:#E6E6F2;text-align:left;">
 					{% if current_user == post.author %}
-					<li><a href='javascript:;' onclick='if(confirm("您确定删除这条记录？"))
+					<li><a href='javascript:;' onclick='if(confirm("您确定删除这条微博？"))
 					{location.href="{{ url_for('.delete_post', id=post.id) }}";}'>删除</a></li>
 					{% elif current_user.is_administrator() %}
 					<li><a href="{{ url_for('.delete_post',id=post.id) }}">删除[Admin]</a></li>
 					{% endif %}
-					{% if current_user != post.author %}
+					{% if current_user != post.author and current_user.is_authenticated %}
 						{% if post not in current_user.shield_post.all() %}
 						<li><a href="{{ url_for('.shield_post', id=post.id) }}" onclick="javascript:return shield();">屏蔽这条微博</a></li>
 						{% else %}

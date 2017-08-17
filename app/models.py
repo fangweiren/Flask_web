@@ -24,6 +24,10 @@ user_shield_post = db.Table('shield',
     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
     db.Column('post_id', db.Integer, db.ForeignKey('posts.id')))
 
+user_like_comment = db.Table('like_comment',
+	db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+	db.Column('comment_id', db.Integer, db.ForeignKey('comments.id')))
+
 
 class Permission:
 	FOLLOW = 0x01
@@ -98,6 +102,9 @@ class User(UserMixin, db.Model):
 									lazy='dynamic')
 	shield_post = db.relationship('Post', secondary=user_shield_post,
 									backref=db.backref('user_shield', lazy='dynamic'),
+									lazy='dynamic')
+	like_comments = db.relationship('Comment', secondary=user_like_comment,
+									backref=db.backref('user_dianzan', lazy='dynamic'),
 									lazy='dynamic')
 
 
@@ -274,6 +281,16 @@ class User(UserMixin, db.Model):
 			post.likes -= 1
 			db.session.add(post)
 
+	def dianzan_comment(self, comment):
+		if comment not in self.like_comments.all():
+			self.like_comments.append(comment)
+			comment.likes += 1
+			db.session.add(comment)
+		else:
+			self.like_comments.remove(comment)
+			comment.likes -= 1
+			db.session.add(comment)
+
 	def add_shield(self, post):
 		if post not in self.shield_post.all():
 			self.shield_post.append(post)
@@ -403,6 +420,7 @@ class Comment(db.Model):
 	disabled = db.Column(db.Boolean)
 	author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 	post_id = db.Column(db.Integer,db.ForeignKey('posts.id'))
+	likes = db.Column(db.Integer, default=0, index=True)
 
 	@staticmethod
 	def on_changed_body(target, value, oldvalue, initiator):
@@ -422,6 +440,15 @@ class Comment(db.Model):
 		}
 		return json_comment
 
+	@staticmethod
+	def likes_to_0():
+		from random import randint
+		comments = Comment.query.all()
+		for comment in comments:
+			comment.likes = randint(1, 100)
+			db.session.add(comment)
+		db.session.commit()
+	
 	@staticmethod
 	def from_json(json_comment):
 		body = json_comment.get('body')
