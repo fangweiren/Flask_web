@@ -1,5 +1,11 @@
+.navbar-brand {padding: 5px;}
+a.active {
+	background: blue;
+}
 div.choice {
 	text-align: right;
+	padding: 6px;
+	font-size: 16px;
 }
 div.fixright {
 	text-align: right;

@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
-{% block title %}Flasky - Post{% endblock %}
+{% block title %}Nancy - 评论{% endblock %}
 
 {% block page_content %}
 {% include '_posts.html' %}
@@ -13,8 +13,8 @@
 </div>
 {% endif %}
 <div class="choice">
-	<a href="{{ url_for('.post', id=posts[0].id) }}"><span>按时间</span></a>
-	<a href="{{ url_for('.sort_by_likes', id=posts[0].id) }}"><span>按热度</span></a>
+	<a {% if not mark %} class="active" {% endif %} href="{{ url_for('.sort_by_time', id=posts[0].id) }}"><span>按时间</span></a>
+		<a {% if mark %} class="active" {% endif %} href="{{ url_for('.sort_by_likes', id=posts[0].id) }}"><span>按热度</span></a>
 </div>
 {% include '_comments.html' %}
 {% if pagination %}
