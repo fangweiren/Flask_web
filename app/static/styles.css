@@ -16,9 +16,7 @@ div.go-top {
 	position: fixed;
 	cursor: pointer;
 }
-form.navbar-form {
-	padding-top: 3px;
-}
+
 ul.nav.navbar-nav li a:hover{color:red;}
 ul.dropdown-menu a:hover{color:red;}
 ul.dropdown-menu.pull-right a:hover{color:red;}
@@ -114,12 +112,7 @@ div.container.footer {
 span.iconfont.icon-xiangxia { float: right; margin-left: 0px;}
 a.iconfont.icon-fanhuidingbu { margin-left: 30px; font-size: 32px;}
 a.iconfont.icon-iconfontyoujian { margin-left: 0px;}
-a.a1 {
-	display: inline-block;
-	width: 13%;
-	font-size: 15px;
-	text-align: center;
-}
+
 a.btn.btn-primary,a.btn.btn-warning {
 	width: 13%;
 	font-size: 15px;
@@ -138,10 +131,6 @@ li.post {
 	border:6px solid #E6E6F2;
 	border-radius: 10px;
 	background: #FCFCFC;
-}
-input#submit.btn.btn-primary {
-	width: 20%;
-	text-align: center;
 }
 div#con3.page-header {
 	text-align: center;
@@ -174,23 +163,9 @@ body {
 	background: url('liuxing.gif') repeat center;
 }
 div.col-md-4 {
-	width: 50%;
-	left: 36%;
-}
-input#email.form-control {
-	width: 65%;
-}
-input#username.form-control {
-    width: 65%;
-}
-input#password.form-control {
-	width: 65%;
-}
-input#password2.form-control {
-	width: 65%;
-}
-input#email_or_username.form-control {
-	width: 65%;
+	float: none;
+	width: 300px;
+	margin:0 auto;
 }
 a.dropdown-toggle {
 	display: block;
