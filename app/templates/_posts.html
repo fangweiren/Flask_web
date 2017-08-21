@@ -47,15 +47,13 @@
 			</div>
 			<div class="post-footer">
 				{% if current_user.is_authenticated and current_user != post.author %}
+				<a class="collect-post" id="{{ post.id }}" href="javascript:void(0);">
 	                {% if post not in current_user.posts_collect.all() %}
-	                    <a href="{{ url_for('.collect_toggle', id=post.id, page=page) }}">
-	                        <span class="iconfont icon-shoucang1"> 收&emsp;藏</span>
-                        </a>
+	                    <span id="collect{{ post.id }}" class="iconfont icon-shoucang1"> 未收藏</span>
                     {% else %}
-                        <a href="{{ url_for('.collect_toggle', id=post.id, page=page) }}">
-                            <span class="iconfont icon-shoucang"> 已收藏</span>
-                        </a>                                                                                           
+                        <span id="collect{{ post.id }}" class="iconfont icon-shoucang"> 已收藏</span>
                     {% endif %}
+				</a>
                 {% endif %}
 				{% if current_user == post.author %}
 				<a href="{{ url_for('.edit', id=post.id) }}">
@@ -73,24 +71,67 @@
 					<span class="iconfont icon-pinglun"> 评&emsp;论 {{ post.comments.count() }}</span>
 				</a>
 				{% if current_user.is_authenticated %}
+				<a class="vote-post" id="{{ post.id }}" href="javascript:void(0);">
 					{% if post not in current_user.like_post.all() %}
-						<a href="{{ url_for('.like_toggle', id=post.id, page=page) }}">
-							<span class="iconfont icon-dianzan3"> 点&emsp;赞 {{ post.likes }}</span>
-						</a>
+						<span id="post{{ post.id }}" class="iconfont icon-dianzan3"> 点 赞</span>
 					{% else %}
-						<a href="{{ url_for('.like_toggle', id=post.id, page=page) }}">
-                            <span class="iconfont icon-dianzan1"> 点&emsp;赞 {{ post.likes }}</span>
-                        </a>
+                        <span id="post{{ post.id }}" class="iconfont icon-dianzan1"> 已 赞</span>
 					{% endif %}
+					<span class="votes"> {{ post.likes }}</span>
+				</a>
 				{% else %}
 					<a href="{{ url_for('auth.login') }}">
-                        <span class="iconfont icon-dianzan3"> 点&emsp;赞 {{ post.likes }}</span>
+                        <span class="iconfont icon-dianzan3"> 点 赞 {{ post.likes }}</span>
                     </a>
-
 				{% endif %}
-
 			</div>
 		</div>
 	</li>
 	{% endfor %}
 </ul>
+<script type=text/javascript>
+  $('a.collect-post').click(function() {
+    var voteBtn = $(this);
+    var data = {
+      "id": voteBtn.prop("id")
+    };
+    $.ajax({
+      url: "/collect-toggle",
+      data: data,
+      success: function(data){
+        var postid = data.id
+        if (data.text === 'iconfont icon-shoucang') {
+          $("span#collect"+postid).attr("class", "iconfont icon-shoucang1");
+          $("span#collect"+postid).text(" 未收藏");
+        } else {
+          $("span#collect"+postid).attr("class", "iconfont icon-shoucang");
+          $("span#collect"+postid).text(" 已收藏");
+        }
+      }
+    })
+  });
+</script>
+<script type=text/javascript>
+  $('a.vote-post').click(function() {
+     var voteBtn = $(this);
+	 var votesNum = voteBtn.find(".votes");
+	 var data = {
+	 	"id": voteBtn.prop("id")
+	 };
+	 $.ajax({
+		url: "/like-toggle",
+		data: data,
+		success: function(data){
+			votesNum.text(data.result)
+			var postid = data.id
+			if (data.text === 'iconfont icon-dianzan3') {
+			   $("span#post"+postid).attr("class", "iconfont icon-dianzan1");
+			   $("span#post"+postid).text(" 已 赞");
+			} else {
+			   $("span#post"+postid).attr("class", "iconfont icon-dianzan3");
+			   $("span#post"+postid).text(" 点 赞");
+			}
+		}
+	})
+  });
+</script>

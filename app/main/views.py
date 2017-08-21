@@ -1,7 +1,7 @@
 #coding:utf-8
 from datetime import datetime
 from flask import render_template, session, redirect, url_for, abort, flash, request, current_app,\
-	make_response, g
+	make_response, g, jsonify
 from flask_login import login_required, current_user
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SearchForm
@@ -303,13 +303,17 @@ def show_collection(username):
 	return render_template('collection.html', username=username, posts=collection, pagination=pagination)
 
 
-@main.route('/collect/<int:id>')
+@main.route('/collect-toggle')
 @login_required
-def collect_toggle(id):
-	page = request.args.get('page', 1, type=int)
+def collect_toggle():
+	id = request.args.get('id', type=int)
 	post = Post.query.get_or_404(id)
 	current_user.collect_toggle(post)
-	return redirect(url_for('.index', id=id, page=page))
+	if post not in current_user.posts_collect.all():
+		text = 'iconfont icon-shoucang'
+	else:
+		text = 'iconfont icon-shoucang1'
+	return jsonify(text=text, id=id)
 
 
 @main.route('/like/<username>')
@@ -323,13 +327,17 @@ def show_like(username):
 	return render_template('like.html', username=username, posts=likes, pagination=pagination)
 
 
-@main.route('/like/<int:id>')
+@main.route('/like-toggle')
 @login_required
-def like_toggle(id):
-	page = request.args.get('page', 1, type=int)
+def like_toggle():
+	id = request.args.get('id', type=int)
 	post = Post.query.get_or_404(id)
 	current_user.like_toggle(post)
-	return redirect(url_for('.index', id=id, page=page))
+	if post not in current_user.like_post.all():
+		text = 'iconfont icon-dianzan1'
+	else:
+		text = 'iconfont icon-dianzan3'
+	return jsonify(result=post.likes, text=text, id=id)
 
 
 @main.route('/like-comment/<int:id>')

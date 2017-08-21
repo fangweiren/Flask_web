@@ -133,4 +133,7 @@
 {{ super() }}
 {{ moment.include_moment() }}
 {{ moment.lang('zh-CN')}}
+<script type="text/javascript">
+	$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
 {% endblock %}
