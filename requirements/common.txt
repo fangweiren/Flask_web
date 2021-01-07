@@ -54,7 +54,7 @@ idna==2.5
 itsdangerous==0.24
 jieba==0.38
 lockfile==0.8
-lxml==3.3.3
+lxml==4.6.2
 oauthlib==0.6.1
 oneconf==0.3.7.14.4.1
 parsel==1.0.3
