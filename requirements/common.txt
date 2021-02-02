@@ -34,7 +34,7 @@ apt-xapian-index==0.45
 argparse==1.2.1
 attrs==16.2.0
 beautifulsoup4==4.2.1
-bleach==2.0.0
+bleach==3.3.0
 blinker==1.4
 certifi==2017.7.27.1
 chardet==3.0.4
