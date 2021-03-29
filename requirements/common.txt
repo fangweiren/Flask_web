@@ -19,7 +19,7 @@ PAM==0.4.2
 Pillow==2.3.0
 PyDispatcher==2.0.5
 PyMySQL==0.7.9
-Pygments==2.2.0
+Pygments==2.7.4
 SQLAlchemy==1.1.5
 Scrapy==1.2.0
 Twisted==16.4.1
